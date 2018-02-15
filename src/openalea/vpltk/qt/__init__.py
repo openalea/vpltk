@@ -102,7 +102,7 @@ def load_pyqt4():
     __version_info__ = tuple(__version__.split('.') + ['final', 1])
     is_pyqt46 = __version__.startswith('4.6')
     QT_MODULE_NAME = 'PyQt4'
-    print QT_MODULE_NAME+' used : '+PyQt_license_warning
+    #print QT_MODULE_NAME+' used : '+PyQt_license_warning
 
 
 def load_pyqt5():
@@ -112,7 +112,7 @@ def load_pyqt5():
     os.environ[QT_API] = PYQT5_API[0]
     logging.getLogger(__name__).debug('imported PyQt5')
     QT_MODULE_NAME = 'PyQt5'
-    print QT_MODULE_NAME+' used : '+PyQt_license_warning
+    #print QT_MODULE_NAME+' used : '+PyQt_license_warning
 
 
 QT_API_LOADER = {}
