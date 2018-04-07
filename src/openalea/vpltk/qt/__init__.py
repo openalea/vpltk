@@ -127,12 +127,13 @@ def autodetect():
     """
     logging.getLogger(__name__).debug('auto-detecting QT_API')
     for API in QT_API_ORDER:
-        try:
-            QT_API_LOADER[API]()
-        except ImportError:
-            continue
-        else:
-            break
+        if API in QT_API_LOADER:
+            try:
+                QT_API_LOADER[API]()
+            except ImportError:
+                continue
+            else:
+                break
 
 
 if QT_API in os.environ:
