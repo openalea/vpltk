@@ -20,7 +20,7 @@ requirements:
     - python
     - setuptools
     - qt <5
-    - pyqt
+    - pyqt <5
     - qtconsole
 
 test:
