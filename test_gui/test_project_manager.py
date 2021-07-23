@@ -24,7 +24,7 @@ def load_all_projects():
     projects = list(pm.search())
     random.shuffle(projects)
     for proj in projects:
-        print 'load', proj
+        print('load', proj)
         pm.cproject = proj
 
 if __name__ == '__main__':

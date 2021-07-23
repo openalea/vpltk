@@ -37,5 +37,5 @@ elif os.environ[QT_API] in PYSIDE_API:
         2: QTabWidget.TabPosition.West,
         3: QTabWidget.TabPosition.East,
     }
-    for idx, position in _tab_position.items():
+    for idx, position in list(_tab_position.items()):
         setattr(QTabWidget, position.name, position)
