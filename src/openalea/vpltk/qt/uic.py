@@ -4,7 +4,7 @@ Provides Qt UI tools
 import os
 from openalea.vpltk.qt import QT_API
 from openalea.vpltk.qt import PYQT5_API
-from openalea.vpltk.qt import PYQT4_API
+from openalea.vpltk.qt import PyQt5_API
 from openalea.vpltk.qt import PYSIDE_API
 
 try:
@@ -12,15 +12,15 @@ try:
     if _QT_API in PYQT5_API:
         from PyQt5.uic import compileUi
         compile_args = dict(execute=False, indent=4)
-    elif _QT_API in PYQT4_API:
-        from PyQt4.uic import compileUi
+    elif _QT_API in PyQt5_API:
+        from PyQt5.uic import compileUi
         compile_args = dict(execute=False, indent=4)
     elif _QT_API in PYSIDE_API:
         from pysideuic import compileUi
         compile_args = dict(execute=False, indent=4, from_imports=False)
     elif _QT_API is None:
         # default
-        from PyQt4.uic import compileUi
+        from PyQt5.uic import compileUi
         compile_args = dict(execute=False, indent=4)
     else :
         raise NotImplementedError

@@ -7,7 +7,7 @@ def test_import_qt():
 	assert result is True
 	
 def test_has_pyqt():
-	from openalea.vpltk.check.qt import has_pyqt4
-	result = has_pyqt4()
+	from openalea.vpltk.check.qt import has_PyQt5
+	result = has_PyQt5()
 	assert result is True
 	

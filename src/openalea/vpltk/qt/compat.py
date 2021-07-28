@@ -30,7 +30,7 @@ This module should be fully compatible with:
 
 import os
 import sys
-from openalea.vpltk.qt import QT_API, PYQT4_API, PYQT5_API, PYSIDE_API
+from openalea.vpltk.qt import QT_API, PyQt5_API, PYQT5_API, PYSIDE_API
 from openalea.vpltk.qt import QtCore
 
 try:
@@ -49,7 +49,7 @@ if os.environ[QT_API] in PYQT5_API:
         2: QTabWidget.West,
         3: QTabWidget.East,
     }
-elif os.environ[QT_API] in PYQT4_API:
+elif os.environ[QT_API] in PyQt5_API:
     from openalea.vpltk.qt.QtGui import QFileDialog, QTabWidget
     _tab_position = {
         0: QTabWidget.North,
@@ -93,7 +93,7 @@ def arrange_path(path, path_class=Path):
 #===============================================================================
 
 PYQT_API_1 = False
-if os.environ[QT_API] in PYQT4_API:
+if os.environ[QT_API] in PyQt5_API:
     import sip
     try:
         PYQT_API_1 = sip.getapi('QVariant') == 1 # PyQt API #1
@@ -107,7 +107,7 @@ if os.environ[QT_API] in PYQT4_API:
         to PyQt API #2 and Pyside (QVariant does not exist)"""
         if PYQT_API_1:
             # PyQt API #1
-            from PyQt4.QtCore import QVariant
+            from PyQt5.QtCore import QVariant
             return QVariant(pyobj)
         else:
             # PyQt API #2

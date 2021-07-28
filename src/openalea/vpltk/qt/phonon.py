@@ -3,6 +3,6 @@
 import os
 
 if os.environ['QT_API'] == 'pyqt':
-    from PyQt4.phonon import *
+    from PyQt5.phonon import *
 else:
     from PySide.phonon import *

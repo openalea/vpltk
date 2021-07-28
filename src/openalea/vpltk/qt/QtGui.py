@@ -1,28 +1,27 @@
 """
 Provides QtGui classes and functions.
 
-.. warning:: All PyQt4/PySide gui classes are exposed but when you use
+.. warning:: All PyQt5/PySide gui classes are exposed but when you use
     PyQt5, those classes are not available. Therefore, you should treat/use
     this package as if it was ``PyQt5.QtGui`` module.
 """
 import os
 from openalea.vpltk.qt import QT_API
 from openalea.vpltk.qt import PYQT5_API
-from openalea.vpltk.qt import PYQT4_API
+from openalea.vpltk.qt import PyQt5_API
 from openalea.vpltk.qt import PYSIDE_API
-
+from PyQt5.QtWidgets import QTabWidget
 
 if os.environ[QT_API] in PYQT5_API:
     from PyQt5.QtGui import *
-    from PyQt5.QtWidgets import QTabWidget
     _tab_position = {
         0: QTabWidget.North,
         1: QTabWidget.South,
         2: QTabWidget.West,
         3: QTabWidget.East,
     }
-elif os.environ[QT_API] in PYQT4_API:
-    from PyQt4.QtGui import *
+elif os.environ[QT_API] in PyQt5_API:
+    from PyQt5.QtGui import *
     _tab_position = {
         0: QTabWidget.North,
         1: QTabWidget.South,

@@ -76,7 +76,7 @@ def commit_api(api):
        dangerous imports"""
 
     if api == QT_API_PYSIDE:
-        ID.forbid('PyQt4')
+        ID.forbid('PyQt5')
     else:
         ID.forbid('PySide')
 
@@ -91,7 +91,7 @@ def loaded_api():
     -------
     None, 'pyside', 'pyqt', or 'pyqtv1'
     """
-    if 'PyQt4.QtCore' in sys.modules:
+    if 'PyQt5.QtCore' in sys.modules:
         if qtapi_version() == 2:
             return QT_API_PYQT
         else:
@@ -102,7 +102,7 @@ def loaded_api():
 
 
 def has_binding(api):
-    """Safely check for PyQt4 or PySide, without importing
+    """Safely check for PyQt5 or PySide, without importing
        submodules
 
        Parameters
@@ -114,18 +114,18 @@ def has_binding(api):
        -------
        True if the relevant module appears to be importable
     """
-    # we can't import an incomplete pyside and pyqt4
+    # we can't import an incomplete pyside and PyQt5
     # this will cause a crash in sip (#1431)
     # check for complete presence before importing
     module_name = {QT_API_PYSIDE: 'PySide',
-                   QT_API_PYQT: 'PyQt4',
-                   QT_API_PYQTv1: 'PyQt4',
-                   QT_API_PYQT_DEFAULT: 'PyQt4'}
+                   QT_API_PYQT: 'PyQt5',
+                   QT_API_PYQTv1: 'PyQt5',
+                   QT_API_PYQT_DEFAULT: 'PyQt5'}
     module_name = module_name[api]
 
     import imp
     try:
-        #importing top level PyQt4/PySide module is ok...
+        #importing top level PyQt5/PySide module is ok...
         mod = __import__(module_name)
         #...importing submodules is not
         imp.find_module('QtCore', mod.__path__)
@@ -170,9 +170,9 @@ def can_import(api):
         return current in [api, None]
 
 
-def import_pyqt4(version=2):
+def import_PyQt5(version=2):
     """
-    Import PyQt4
+    Import PyQt5
 
     Parameters
     ----------
@@ -191,10 +191,10 @@ def import_pyqt4(version=2):
         sip.setapi('QString', version)
         sip.setapi('QVariant', version)
 
-    from PyQt4 import QtGui, QtCore, QtSvg
+    from PyQt5 import QtGui, QtCore, QtSvg
 
     if not check_version(QtCore.PYQT_VERSION_STR, '4.7'):
-        raise ImportError("IPython requires PyQt4 >= 4.7, found %s" %
+        raise ImportError("IPython requires PyQt5 >= 4.7, found %s" %
                           QtCore.PYQT_VERSION_STR)
 
     # Alias PyQt-specific functions for PySide compatibility.
@@ -244,9 +244,9 @@ def load_qt(api_options):
     an incompatible library has already been installed)
     """
     loaders = {QT_API_PYSIDE: import_pyside,
-               QT_API_PYQT: import_pyqt4,
-               QT_API_PYQTv1: partial(import_pyqt4, version=1),
-               QT_API_PYQT_DEFAULT: partial(import_pyqt4, version=None)
+               QT_API_PYQT: import_PyQt5,
+               QT_API_PYQTv1: partial(import_PyQt5, version=1),
+               QT_API_PYQT_DEFAULT: partial(import_PyQt5, version=None)
                }
 
     for api in api_options:
@@ -268,11 +268,11 @@ def load_qt(api_options):
     else:
         raise ImportError("""
     Could not load requested Qt binding. Please ensure that
-    PyQt4 >= 4.7 or PySide >= 1.0.3 is available,
+    PyQt5 >= 4.7 or PySide >= 1.0.3 is available,
     and only one is imported per session.
 
     Currently-imported Qt library:   %r
-    PyQt4 installed:                 %s
+    PyQt5 installed:                 %s
     PySide >= 1.0.3 installed:       %s
     Tried to load:                   %r
     """ % (loaded_api(),
