@@ -30,7 +30,7 @@ This module should be fully compatible with:
 
 import os
 import sys
-from openalea.vpltk.qt import QT_API, PYQT4_API, PYQT5_API, PYSIDE_API
+from openalea.vpltk.qt import QT_API, PYQT5_API, PYQT4_API, PYSIDE_API
 from openalea.vpltk.qt import QtCore
 
 try:
@@ -41,7 +41,7 @@ else:
     FilePath = DirPath = Path
 
 
-if os.environ[QT_API] in PYQT5_API:
+if os.environ[QT_API] in PYQT4_API:
     from openalea.vpltk.qt.QtWidgets import QFileDialog, QTabWidget
     _tab_position = {
         0: QTabWidget.North,
@@ -49,7 +49,7 @@ if os.environ[QT_API] in PYQT5_API:
         2: QTabWidget.West,
         3: QTabWidget.East,
     }
-elif os.environ[QT_API] in PYQT4_API:
+elif os.environ[QT_API] in PYQT5_API:
     from openalea.vpltk.qt.QtGui import QFileDialog, QTabWidget
     _tab_position = {
         0: QTabWidget.North,

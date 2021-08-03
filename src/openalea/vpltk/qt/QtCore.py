@@ -6,7 +6,7 @@ from openalea.vpltk.qt import QT_API
 from openalea.vpltk.qt import PYQT5_API
 from openalea.vpltk.qt import PYQT4_API
 from openalea.vpltk.qt import PYSIDE_API
-
+from openalea.vpltk.qt import PYSIDE2_API
 
 if os.environ[QT_API] in PYQT5_API:
     from PyQt5.QtCore import *
@@ -22,7 +22,7 @@ elif os.environ[QT_API] in PYQT4_API:
     from PyQt4.QtCore import pyqtSignal as Signal
     from PyQt4.QtCore import pyqtSlot as Slot
     from PyQt4.QtCore import pyqtProperty as Property
-    from PyQt4.QtGui import QSortFilterProxyModel
+    from PyQt4.QtCore import QSortFilterProxyModel
     # use a common __version__
     from PyQt4.QtCore import QT_VERSION_STR as __version__
 elif os.environ[QT_API] in PYSIDE_API:
@@ -31,3 +31,6 @@ elif os.environ[QT_API] in PYSIDE_API:
     # use a common __version__
     import PySide.QtCore
     __version__ = PySide.QtCore.__version__
+elif os.environ[QT_API] in PYSIDE2_API:
+    from PySide2.QtCore import *
+    import PySide2.QtCore

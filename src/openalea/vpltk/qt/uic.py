@@ -20,7 +20,7 @@ try:
         compile_args = dict(execute=False, indent=4, from_imports=False)
     elif _QT_API is None:
         # default
-        from PyQt4.uic import compileUi
+        from PyQt5.uic import compileUi
         compile_args = dict(execute=False, indent=4)
     else :
         raise NotImplementedError

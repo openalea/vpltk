@@ -29,17 +29,21 @@ import sys
 import logging
 
 __version__ = '2.10.0'
-is_pyqt46 = False
+is_PyQt46 = False
 
 #: Qt API environment variable name
 QT_API = 'QT_API'
+#: names of the expected PyQt4 api
+PYQT4_API = [
+    'pyqt',  # name used in IPython.qt
+    'pyqt4'  # pyqode.qt original name
+]
 #: names of the expected PyQt5 api
 PYQT5_API = ['pyqt5']
-#: names of the expected PyQt4 api
-PYQT4_API = ['pyqt']  # name used in IPython.qt
 
 #: names of the expected PySide api
 PYSIDE_API = ['pyside']
+PYSIDE2_API = ['pyside2']
 
 QT_MODULE_NAME = None
 
@@ -48,7 +52,7 @@ try:
     from qtconsole.qt import api_opts
 except ImportError:
     import openalea.vpltk.qt.qt_loaders
-    QT_API_ORDER = ['pyqt', 'pyside', 'pyqt5']
+    QT_API_ORDER = ['pyqt5', 'pyside2', 'pyqt', 'pyside']
 else:
     QT_API_ORDER = api_opts
 _api_version = int(os.environ.setdefault('QT_API_VERSION', '2'))
@@ -56,7 +60,7 @@ _api_version = int(os.environ.setdefault('QT_API_VERSION', '2'))
 
 def setup_apiv2():
     """
-    Setup apiv2 when using PyQt4 and Python2.
+    Setup apiv2 when using PyQt5 and Python2.
     """
     # setup PyQt api to version 2
     if sys.version_info[0] == 2:
@@ -68,49 +72,49 @@ def setup_apiv2():
             sip.setapi("QVariant", 2)
         except ValueError:
             logging.getLogger(__name__).critical(
-                "failed to set up sip api to version 2 for PyQt4")
-            raise ImportError('PyQt4')
+                "failed to set up sip api to version 2 for PyQt5")
+            raise ImportError('PyQt5')
 
 
 def load_pyside():
     global QT_MODULE_NAME
     logging.getLogger(__name__).debug('trying PySide')
-    import PySide
+    import PySide2
     os.environ[QT_API] = PYSIDE_API[0]
     logging.getLogger(__name__).debug('imported PySide')
-    QT_MODULE_NAME = 'PySide'
+    QT_MODULE_NAME = 'PySide2'
 
 
-def load_pyqt4():
-    global QT_MODULE_NAME, is_pyqt46, __version_info__
-    logging.getLogger(__name__).debug('trying PyQt4')
-    import PyQt4
-    os.environ[QT_API] = PYQT4_API[0]
-    setup_apiv2()
-    logging.getLogger(__name__).debug('imported PyQt4')
-    __version_info__ = tuple(__version__.split('.') + ['final', 1])
-    is_pyqt46 = __version__.startswith('4.6')
-    QT_MODULE_NAME = 'PyQt4'
-    #print QT_MODULE_NAME+' used : '+PyQt_license_warning
-
-
-def load_pyqt5():
-    global QT_MODULE_NAME
+def load_PyQt5():
+    global QT_MODULE_NAME, is_PyQt56, __version_info__
     logging.getLogger(__name__).debug('trying PyQt5')
     import PyQt5
     os.environ[QT_API] = PYQT5_API[0]
+    setup_apiv2()
     logging.getLogger(__name__).debug('imported PyQt5')
+    __version_info__ = tuple(__version__.split('.') + ['final', 1])
+    is_PyQt56 = __version__.startswith('5.15')
     QT_MODULE_NAME = 'PyQt5'
+    #print QT_MODULE_NAME+' used : '+PyQt_license_warning
+
+
+def load_pyqt4():
+    global QT_MODULE_NAME
+    logging.getLogger(__name__).debug('trying PyQt4')
+    import PyQt4
+    os.environ[QT_API] = PYQT4_API[0]
+    logging.getLogger(__name__).debug('imported PyQt4')
+    QT_MODULE_NAME = 'PyQt4'
     #print QT_MODULE_NAME+' used : '+PyQt_license_warning
 
 
 QT_API_LOADER = {}
 for API in PYSIDE_API:
     QT_API_LOADER[API] = load_pyside
+for API in PYQT5_API:
+    QT_API_LOADER[API] = load_PyQt5
 for API in PYQT4_API:
     QT_API_LOADER[API] = load_pyqt4
-for API in PYQT5_API:
-    QT_API_LOADER[API] = load_pyqt5
 
 
 class PythonQtError(Exception):
