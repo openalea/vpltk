@@ -22,7 +22,7 @@ elif os.environ[QT_API] in PYQT4_API:
     from PyQt4.QtCore import pyqtSignal as Signal
     from PyQt4.QtCore import pyqtSlot as Slot
     from PyQt4.QtCore import pyqtProperty as Property
-    from PyQt4.QtCore import QSortFilterProxyModel
+    from PyQt4.QtGui import QSortFilterProxyModel
     # use a common __version__
     from PyQt4.QtCore import QT_VERSION_STR as __version__
 elif os.environ[QT_API] in PYSIDE_API:
