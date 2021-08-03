@@ -9,5 +9,18 @@ def has_pyqt4():
         return True
     except ImportError:
         return False  
-	
+
+def has_pyqt5():
+    """
+    Check if User can import PyQt5
+    
+    :return: True if user can use PyQt5. Else False.
+    """
+    try:
+        import PyQt5
+        return True
+    except ImportError:
+        return False  
+
 has_pyqt4()
+has_pyqt5()
