@@ -7,9 +7,10 @@ Provides QtTest and functions
 """
 import os
 from openalea.vpltk.qt import QT_API
-from openalea.vpltk.qt import PYQT5_API
 from openalea.vpltk.qt import PYQT4_API
+from openalea.vpltk.qt import PYQT5_API
 from openalea.vpltk.qt import PYSIDE_API
+from openalea.vpltk.qt import PYSIDE2_API
 
 if os.environ[QT_API] in PYQT5_API:
     from PyQt5.QtTest import *
@@ -28,6 +29,18 @@ elif os.environ[QT_API] in PYSIDE_API:
     import datetime
     from PySide.QtTest import *
     from PySide.QtGui import QApplication
+
+    @staticmethod
+    def qWait(t):
+        end = datetime.datetime.now() + datetime.timedelta(milliseconds=t)
+        while datetime.datetime.now() < end:
+            QApplication.processEvents()
+    QTest.qWait = qWait
+
+elif os.environ[QT_API] in PYSIDE2_API:
+    import datetime
+    from PySide2.QtTest import *
+    from PySide2.QtWidgets import QApplication
 
     @staticmethod
     def qWait(t):
