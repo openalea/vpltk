@@ -26,7 +26,7 @@ api_to_module = {QT_API_PYSIDE2: 'PySide2',
                  QT_API_PYQT: 'PyQt4',
                  QT_API_PYQTv1: 'PyQt4',
                  QT_API_PYQT5: 'PyQt5',
-                 QT_API_PYQT_DEFAULT: 'PyQt4',
+                 QT_API_PYQT_DEFAULT: 'PyQt5',
                 }
 
 

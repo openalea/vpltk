@@ -33,4 +33,5 @@ elif os.environ[QT_API] in PYSIDE_API:
     __version__ = PySide.QtCore.__version__
 elif os.environ[QT_API] in PYSIDE2_API:
     from PySide2.QtCore import *
+    from PySide2.QtCore import SIGNAL as Signal
     import PySide2.QtCore

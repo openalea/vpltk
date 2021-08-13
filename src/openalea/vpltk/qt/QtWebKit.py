@@ -11,7 +11,8 @@ from openalea.vpltk.qt import PYSIDE2_API
 if os.environ[QT_API] in PYQT4_API:
     from PyQt4.QtWebKit import *
 elif os.environ[QT_API] in PYQT5_API:
-    from PyQt5.QtWebEngineWidgets import *
+    # from PyQt5.QtWebEngineWidgets import * Not working
+    pass
 elif os.environ[QT_API] in PYSIDE_API:
     from PySide.QtWebKit import *
 elif os.environ[QT_API] in PYSIDE2_API:
