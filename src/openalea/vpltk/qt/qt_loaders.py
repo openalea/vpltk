@@ -1,3 +1,12 @@
+#--------------------------------------------------------------------------------
+# Copyright (c) 2010, IPython Development Team.
+#
+# Distributed under the terms of the Modified BSD License.
+#
+# The full license is in the file COPYING.txt, distributed with IPython software.
+#--------------------------------------------------------------------------------
+
+
 """
 This module contains factory functions that attempt
 to return Qt submodules from the various python Qt bindings.

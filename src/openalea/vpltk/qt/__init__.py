@@ -29,7 +29,7 @@ import sys
 import logging
 
 __version__ = '2.10.0'
-is_PyQt46 = False
+is_pyqt46 = False
 
 #: Qt API environment variable name
 QT_API = 'QT_API'
@@ -60,7 +60,7 @@ _api_version = int(os.environ.setdefault('QT_API_VERSION', '2'))
 
 def setup_apiv2():
     """
-    Setup apiv2 when using PyQt5 and Python2.
+    Setup apiv2 when using PyQt4 and Python2.
     """
     # setup PyQt api to version 2
     if sys.version_info[0] == 2:
@@ -72,8 +72,8 @@ def setup_apiv2():
             sip.setapi("QVariant", 2)
         except ValueError:
             logging.getLogger(__name__).critical(
-                "failed to set up sip api to version 2 for PyQt5")
-            raise ImportError('PyQt5')
+                "failed to set up sip api to version 2 for PyQt4")
+            raise ImportError('PyQt4')
 
 
 def load_pyside():
@@ -85,7 +85,7 @@ def load_pyside():
     QT_MODULE_NAME = 'PySide2'
 
 
-def load_PyQt5():
+def load_pyqt5():
     global QT_MODULE_NAME, is_PyQt56, __version_info__
     logging.getLogger(__name__).debug('trying PyQt5')
     import PyQt5
@@ -112,7 +112,7 @@ QT_API_LOADER = {}
 for API in PYSIDE_API:
     QT_API_LOADER[API] = load_pyside
 for API in PYQT5_API:
-    QT_API_LOADER[API] = load_PyQt5
+    QT_API_LOADER[API] = load_pyqt5
 for API in PYQT4_API:
     QT_API_LOADER[API] = load_pyqt4
 

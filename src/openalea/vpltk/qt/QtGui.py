@@ -1,7 +1,7 @@
 """
 Provides QtGui classes and functions.
 
-.. warning:: All PyQt5/PySide gui classes are exposed but when you use
+.. warning:: All PyQt4/PySide gui classes are exposed but when you use
     PyQt5, those classes are not available. Therefore, you should treat/use
     this package as if it was ``PyQt5.QtGui`` module.
 """
