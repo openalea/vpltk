@@ -8,6 +8,7 @@
 #       File author(s): Pierre Raybaut
 #
 #       File contributor(s): Guillaume Baty
+#           Christophe Pradal
 #
 #       Licensed under the terms of the MIT License
 #       (see spyderlib/__init__.py for details)
@@ -30,8 +31,8 @@ This module should be fully compatible with:
 
 import os
 import sys
-from openalea.vpltk.qt import QT_API, PYQT4_API, PYQT5_API, PYSIDE_API
-from openalea.vpltk.qt import QtCore
+from . import QT_API, PYQT4_API, PYQT5_API, PYSIDE_API
+from . import QtCore
 
 try:
     from openalea.core.path import path as Path
@@ -42,7 +43,7 @@ else:
 
 
 if os.environ[QT_API] in PYQT5_API:
-    from openalea.vpltk.qt.QtWidgets import QFileDialog, QTabWidget
+    from .QtWidgets import QFileDialog, QTabWidget
     _tab_position = {
         0: QTabWidget.North,
         1: QTabWidget.South,
@@ -50,7 +51,7 @@ if os.environ[QT_API] in PYQT5_API:
         3: QTabWidget.East,
     }
 elif os.environ[QT_API] in PYQT4_API:
-    from openalea.vpltk.qt.QtGui import QFileDialog, QTabWidget
+    from .QtGui import QFileDialog, QTabWidget
     _tab_position = {
         0: QTabWidget.North,
         1: QTabWidget.South,
@@ -70,7 +71,7 @@ elif os.environ[QT_API] in PYSIDE_API:
 
 
 def arrange_path(path, path_class=Path):
-    u"""
+    """
     Return a Path, FilePath or DirPath dependings on path nature.
     Path is used for special path like device "files" or path not existing on disk.
     If path is empty, returns None.
@@ -80,7 +81,7 @@ def arrange_path(path, path_class=Path):
     """
     if not path:
         return None
-    path = Path(unicode(path))
+    path = Path(str(path))
     if path.isfile():
         return FilePath(path)
     elif path.isdir():
@@ -120,7 +121,7 @@ if os.environ[QT_API] in PYQT4_API:
         if PYQT_API_1:
             # PyQt API #1
             assert callable(convfunc)
-            if convfunc in (unicode, str):
+            if convfunc in (str, str):
                 return convfunc(qobj.toString())
             elif convfunc is bool:
                 return qobj.toBool()
@@ -166,14 +167,14 @@ def getexistingdirectory(parent=None, caption='', basedir='',
         if sys.platform == "win32":
             # On Windows platforms: restore standard outputs
             sys.stdout, sys.stderr = _temp1, _temp2
-    if not isinstance(result, basestring):
+    if not isinstance(result, str):
         # PyQt API #1
         result = arrange_path(result, path_class=Path)
     return result
 
 
-def _qfiledialog_wrapper(attr, parent=None, caption=u'', basedir=u'',
-                         filters=u'', selectedfilter=u'', options=None,
+def _qfiledialog_wrapper(attr, parent=None, caption='', basedir='',
+                         filters='', selectedfilter='', options=None,
                          path_class=Path):
     if options is None:
         options = QFileDialog.Options(0)
@@ -217,17 +218,17 @@ def _qfiledialog_wrapper(attr, parent=None, caption=u'', basedir=u'',
 
     if QString is not None:
         # PyQt API #1: conversions needed from QString/QStringList
-        selectedfilter = unicode(selectedfilter)
+        selectedfilter = str(selectedfilter)
         if isinstance(output, QString):
             # Single filename
-            output = unicode(output)
+            output = str(output)
         elif output is None:
             pass
         else:
             # List of filenames
-            output = [unicode(fname) for fname in output]
+            output = [str(fname) for fname in output]
 
-    if isinstance(output, unicode):
+    if isinstance(output, str):
         # Single filename
         output = arrange_path(output, path_class=path_class)
     elif isinstance(output, list):
@@ -239,8 +240,8 @@ def _qfiledialog_wrapper(attr, parent=None, caption=u'', basedir=u'',
     return output, selectedfilter
 
 
-def getopenfilename(parent=None, caption=u'', basedir=u'', filters=u'',
-                    selectedfilter=u'', options=None):
+def getopenfilename(parent=None, caption='', basedir='', filters='',
+                    selectedfilter='', options=None):
     """Wrapper around QtGui.QFileDialog.getOpenFileName static method
     Returns a tuple (filename, selectedfilter) -- when dialog box is canceled,
     returns a tuple of empty strings
@@ -251,8 +252,8 @@ def getopenfilename(parent=None, caption=u'', basedir=u'', filters=u'',
                                 options=options, path_class=FilePath)
 
 
-def getopenfilenames(parent=None, caption=u'', basedir=u'', filters=u'',
-                     selectedfilter=u'', options=None):
+def getopenfilenames(parent=None, caption='', basedir='', filters='',
+                     selectedfilter='', options=None):
     """Wrapper around QtGui.QFileDialog.getOpenFileNames static method
     Returns a tuple (filenames, selectedfilter) -- when dialog box is canceled,
     returns a tuple (empty list, empty string)
@@ -263,8 +264,8 @@ def getopenfilenames(parent=None, caption=u'', basedir=u'', filters=u'',
                                 options=options, path_class=FilePath)
 
 
-def getsavefilename(parent=None, caption=u'', basedir=u'', filters=u'',
-                    selectedfilter=u'', options=None):
+def getsavefilename(parent=None, caption='', basedir='', filters='',
+                    selectedfilter='', options=None):
     """Wrapper around QtGui.QFileDialog.getSaveFileName static method
     Returns a tuple (filename, selectedfilter) -- when dialog box is canceled,
     returns a tuple of empty strings
@@ -286,7 +287,7 @@ def tabposition_int(value):
     if isinstance(value, int):
         return value
     else:
-        for idx, pos in _tab_position.items():
+        for idx, pos in list(_tab_position.items()):
             if pos == value:
                 return idx
 
