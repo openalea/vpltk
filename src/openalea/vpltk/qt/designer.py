@@ -32,7 +32,7 @@ import sys
 import os
 
 from openalea.core.path import path as Path
-from .qt import QT_MODULE_NAME
+from . import QT_MODULE_NAME
 
 from .uic import compileUi, compile_args
 
