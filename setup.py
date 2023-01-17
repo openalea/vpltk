@@ -47,8 +47,6 @@ setup(
 
     # Dependencies
     setup_requires=setup_requires,
-    install_requires=install_requires,
-    dependency_links=dependency_links,
 
     # Eventually include data in your package
     # (flowing is to include all versioned files other than .py)
