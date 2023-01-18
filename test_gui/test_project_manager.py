@@ -1,6 +1,6 @@
 
 
-from openalea.vpltk.qt import QtGui
+from openalea.vpltk.qt import QtWidgets
 import random
 from openalea.oalab.project.projectwidget import ProjectManagerWidget
 from openalea.core.project.manager import ProjectManager
@@ -30,9 +30,9 @@ def load_all_projects():
 if __name__ == '__main__':
     tmp = tempdir()
 
-    instance = QtGui.QApplication.instance()
+    instance = QtWidgets.QApplication.instance()
     if instance is None:
-        app = QtGui.QApplication([])
+        app = QtWidgets.QApplication([])
     else:
         app = instance
 
@@ -54,8 +54,8 @@ if __name__ == '__main__':
     interpreter.user_ns['pm'] = pm
     # Set Shell Widget
 
-    widget = QtGui.QWidget()
-    layout = QtGui.QHBoxLayout(widget)
+    widget = QtWidgets.QWidget()
+    layout = QtWidgets.QHBoxLayout(widget)
 
     shellwdgt = get_shell_class()(interpreter)
 
