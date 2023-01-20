@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup, find_packages
-from openalea.deploy.metainfo import read_metainfo
 
 _version = {}
 with open("src/openalea/vpltk/version.py") as fp:
