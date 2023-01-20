@@ -11,7 +11,7 @@ try:
     _QT_API = os.environ.get(QT_API)
     if _QT_API in PYQT5_API:
         from PyQt5.uic import compileUi
-        compile_args = dict(execute=False, indent=4)
+        compile_args = dict(execute=False, indent=4, from_imports=True)
     elif _QT_API in PYQT4_API:
         from PyQt4.uic import compileUi
         compile_args = dict(execute=False, indent=4)

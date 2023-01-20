@@ -47,7 +47,7 @@ QT_MODULE_NAME = None
 try:
     from qtconsole.qt import api_opts
 except ImportError:
-    import openalea.vpltk.qt.qt_loaders
+    from . import qt_loaders
     QT_API_ORDER = ['pyqt', 'pyside', 'pyqt5']
 else:
     QT_API_ORDER = api_opts
@@ -155,4 +155,4 @@ else:
     # user did not select a qt api, let's perform auto-detection
     autodetect()
 
-import openalea.vpltk.qt.designer
+from . import designer
