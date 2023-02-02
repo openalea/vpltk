@@ -32,7 +32,9 @@ import sys
 import os
 
 from openalea.core.path import path as Path
-from openalea.vpltk.qt import QT_MODULE_NAME
+from . import QT_MODULE_NAME
+
+from .uic import compileUi, compile_args
 
 
 FORCE_UI_GENERATION = False
@@ -54,7 +56,7 @@ def get_data(name, path):
 
 
 def mtime(path):
-    u"""Last-modified time of the file."""
+    """Last-modified time of the file."""
     return os.path.getmtime(path)
 
 
@@ -63,10 +65,10 @@ def mtime_datetime(path):
 
 
 def replaceext(self, ext, old_ext=None):
-    u"""
+    """
     Changes current extension to ext.
     If extension contains more than one dot (ex: .tar.gz) you can specify
-    it with "old_ext" argument.
+    it with 'old_ext' argument.
 
     >>> from pyLot.core import Path
     >>> p = Path(u'path.py')
@@ -91,7 +93,6 @@ def replaceext(self, ext, old_ext=None):
             return self.__class__(self[:-len(old_ext)] + ext)
 
 
-from openalea.vpltk.qt.uic import compileUi, compile_args
 
 
 def generate_pyfile_from_uifile(name, src=None, dest=None, uibasename=None, force=None):
@@ -179,9 +180,9 @@ def generate_pyfile_from_uifile(name, src=None, dest=None, uibasename=None, forc
             sys.path.append(module_dir)
 
         if force:
-            print 'build %s from %s\n' % (pyfilename, path)
+            print('build %s from %s\n' % (pyfilename, path))
         else:
-            print '%s has changed, build %s\n' % (path, pyfilename)
+            print('%s has changed, build %s\n' % (path, pyfilename))
 
         pyfile = open(pyfilename, 'w')
         compileUi(path, pyfile, **compile_args)
@@ -223,7 +224,7 @@ def compile_ui_files(module, import_instructions=None):
         try:
             r = ast.parse(code)
         except SyntaxError:
-            print 'SYNTAX ERROR: cannot read ...', py
+            print('SYNTAX ERROR: cannot read ...', py)
         else:
             for instr in r.body:
                 if isinstance(instr, ast.Expr):
@@ -251,15 +252,15 @@ def compile_ui_files(module, import_instructions=None):
                                 src = src.replace('__name__', repr(name))
                                 try:
                                     code = compile(import_instructions + src, "<string>", "exec")
-                                    exec code
+                                    exec(code)
                                 except Exception as e:
-                                    print repr(e)
-                                    print 'COMPILATION ERROR: cannot compile', py
-                                    print
+                                    print(repr(e))
+                                    print('COMPILATION ERROR: cannot compile', py)
+                                    print()
 
 try:
-    from openalea.vpltk.qt import QtCore
-    from openalea.vpltk.qt._test import QtCore as previous_QtCore
+    from .qt import QtCore
+    from .qt._test import QtCore as previous_QtCore
     if QtCore.QObject != previous_QtCore.QObject:
         raise ImportError
 except ImportError:

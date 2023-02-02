@@ -22,7 +22,7 @@ requirements:
     - six
   run:
     - python >=3.6
-    - setuptools
+    - openalea.deploy
     - pyqt >=5
     - qtconsole
     - openalea.core
