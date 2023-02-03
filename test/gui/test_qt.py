@@ -1,6 +1,6 @@
 def test_import_qt():
 	try:
-		from openalea.vpltk.qt import QtCore, QtGui
+		from qtpy import QtCore, QtGui
 		result = True
 	except ImportError:
 		result = False

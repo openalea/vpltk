@@ -1,6 +1,6 @@
 
 
-from openalea.vpltk.qt import QtWidgets
+from qtpy import QtWidgets
 import random
 from openalea.oalab.paradigm.container import ParadigmContainer
 from openalea.core.service.data import DataFactory

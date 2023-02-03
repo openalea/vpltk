@@ -198,8 +198,8 @@ def import_pyqt4(version=2):
                           QtCore.PYQT_VERSION_STR)
 
     # Alias PyQt-specific functions for PySide compatibility.
-    QtCore.Signal = QtCore.pyqtSignal
-    QtCore.Slot = QtCore.pyqtSlot
+    QtCore.Signal = QtCore.Signal
+    QtCore.Slot = QtCore.Slot
 
     # query for the API version (in case version == None)
     version = sip.getapi('QString')
